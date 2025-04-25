@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Filter</title>
+    <link rel="stylesheet" th:href="@{/styles.css}">
+</head>
+
+<body>
+    <header>
+        <h1>App Filter Products</h1>
+    </header>
+    <form action="/api/products" method="get">
+        <label for="minPrice">Min Price:</label>
+        <input type="number" id="minPrice" name="minPrice" placeholder="Ex: 500000">
+
+        <label for="maxPrice">Max Price:</label>
+        <input type="number" id="maxPrice" name="maxPrice" placeholder="Ex: 1000000">
+
+        <label for="category">Category:</label>
+        <select name="category" id="category">
+            <option value="">Categories</option>
+            <option value="Electronics">Electronics</option>
+            <option value="Appliances">Appliances</option>
+            <option value="Furniture">Furniture</option>
+        </select>
+
+        <button type="submit">Filter Products</button>
+    </form>
+
+    <div class="boxfiltered">
+        <h2>Filtered Products</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                    <th>Stock</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="product : ${products}">
+                    <td th:text="${product.id}"></td>
+                    <td th:text="${product.name}"></td>
+                    <td th:text="${product.category}"></td>
+                    <td th:text="${'$' + #numbers.formatDecimal(product.price, 1, 2, 'COMMA')}"></td>
+                    <td th:text="${product.stock}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
